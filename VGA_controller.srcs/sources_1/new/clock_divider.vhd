@@ -35,8 +35,9 @@ entity clock_divider is
             source_clk   : integer := 50000000;     -- 50 MHz
             target_clk   : integer := 25000000      -- 25 MHz
             );
-    Port ( clk          : in STD_LOGIC;
-           pixel_clk    : out STD_LOGIC
+    Port (  rst          : in STD_LOGIC;
+            clk          : in STD_LOGIC;
+            pixel_clk    : out STD_LOGIC
            );
 end clock_divider;
 
@@ -51,11 +52,12 @@ begin
         counter     := 0;
         pixel_clk   <= '0';
     elsif rising_edge(clk) then
+        counter     := counter + 1;
         if (counter  = max_counter) then
             counter     := 0;
             pixel_clk   <= not(pixel_clk);
         end if;
-        counter     := counter + 1;
+        
     end if;
 end process clk_divider;
 end Behavioral;
